@@ -1,0 +1,202 @@
+#include<iostream>
+#include<stdlib.h>
+#include<conio.h>
+#include <iomanip>
+using namespace std;
+
+
+void ingresadatos(int* n, int* arregloEdad, char*arregloSexo, char* arregloTipPrueb, char* arregloNivelSatis)
+{
+	for (int i = 0; i < *n; i++)
+	{
+		srand(time(NULL));
+		char letras[] = "FM";
+		char LetratipoPrueba[] = "RHC";
+		char LetraNivelSatisfac[] = "BRM";
+		int numdeletras = sizeof(letras) / sizeof(letras[0]) - 1;
+		int numdeletrasTipoPrue = sizeof(LetratipoPrueba) / sizeof(LetratipoPrueba[0]) - 1;
+		int numdeletrasNivelSatis = sizeof(LetraNivelSatisfac) / sizeof(LetraNivelSatisfac[0]) - 1;
+		for (int i = 0; i < *n; i++)
+		{
+			arregloEdad[i] = 25 + rand() % +75 - 18+1;
+			arregloSexo[i] = letras[rand() % numdeletras];//Agrega numero aleatorio a la posicion i de la arreglo;
+			arregloTipPrueb[i] = LetratipoPrueba[rand() % numdeletrasTipoPrue];//Agrega numero aleatorio a la posicion i de la arreglo;
+			arregloNivelSatis[i] = LetraNivelSatisfac[rand() % numdeletrasNivelSatis];//Agrega numero aleatorio a la posicion i de la arreglo;
+
+		}
+	}
+
+	
+
+	srand(time(0));//numeros Aleatorios en funcion del tiempo
+}
+
+void genera_y_muestra_arreglo(int* n, int* arregloEdad, char* arregloSexo, char* arregloTipPrueb, char* arregloNivelSatis )
+{
+	for (int i = 0; i < *n; i++)
+	{
+		cout <<"[" << i <<"]" << "";
+
+
+	}
+	cout << endl;
+	for (int i = 0; i < *n; i++)
+	{
+		cout << arregloEdad[i] << " ";
+		
+		
+	}
+	cout << endl;
+	for (int i = 0; i < *n; i++)
+	{
+		
+		cout << arregloSexo[i] << "  ";
+		
+
+	}
+	cout << endl;
+	for (int i = 0; i < *n; i++)
+	{
+		
+		cout << arregloTipPrueb[i] << "  ";
+		
+
+	}
+	cout << endl;
+	for (int i = 0; i < *n; i++)
+	{
+	
+		cout << arregloNivelSatis[i] << "  ";
+
+	}
+	cout << endl;
+}
+
+void hallay_mayor_y_cuantos(int* n, int* arregloEdad)
+{
+	int mayor=0;
+	for (int i = 0; i < *n; i++)
+	{
+		if (arregloEdad[i]>mayor)
+		{
+			mayor = arregloEdad[i];
+			
+		}
+	}
+	int contadorMayorEdad = 0;
+	for (int i = 0; i < *n; i++)
+	{
+		if (arregloEdad[i] ==mayor)
+		{
+			contadorMayorEdad++;
+
+		}
+	}
+
+	cout << "la mayor edad es: " << mayor << endl;
+	cout << "numero de pacientes con mayor edad: " << contadorMayorEdad << endl;
+
+}
+
+void porcentaje_pruebas(int* n, int* arregloEdad, char* arregloTipPrueb) {
+	double contadorMenor30Hep=0;
+	double contadorMayor50CovOren=0;
+	double porccontadorMenor30Hep = 0;
+	double porccontadorMayor50CovOren = 0;
+	for (int i = 0; i < *n; i++)
+	{
+		if (arregloEdad[i] < 30 && arregloTipPrueb[i] == 'H') {
+			contadorMenor30Hep++;
+		}
+		if (arregloEdad[i] > 50 && (arregloTipPrueb[i] == 'C' || arregloTipPrueb[i] == 'R')) {
+			contadorMayor50CovOren++;
+		}
+	}
+
+	porccontadorMenor30Hep = contadorMenor30Hep / *n;
+	porccontadorMayor50CovOren = contadorMayor50CovOren / *n;
+
+	cout << "porcentaje  pacientes mayores de 50 y con prueba covid o renal: " << porccontadorMayor50CovOren << endl;
+	cout << "porcentaje  pacientes menores de 30 y con prueba hepatica: : " << porccontadorMenor30Hep << endl;
+
+}
+
+
+void promedio_edad_por_nivel(int* n, int* arregloEdad, char* arregloNivelSatis) {
+	int contadorBUENO = 0;
+	int contadorMALO = 0;
+	int contadorREGULAR = 0;
+
+	double acumuladorEdadBUENO = 0;
+	double acumuladorEdadMALO = 0;
+	double acumuladorEdadREGULAR = 0;
+
+	double promedioEdadBUENO = 0;
+	double promedioEdadMALO = 0;
+	double promedioEdadREGULAR = 0;
+
+	
+	for (int i = 0; i < *n; i++)
+	{
+		if (arregloNivelSatis[i] =='B') {
+			acumuladorEdadBUENO = acumuladorEdadBUENO + arregloEdad[i];
+			contadorBUENO++;
+		}
+		if (arregloNivelSatis[i] == 'M') {
+			acumuladorEdadMALO = acumuladorEdadMALO + arregloEdad[i];
+			contadorMALO++;
+		}
+		if (arregloNivelSatis[i] == 'R') {
+			acumuladorEdadREGULAR = acumuladorEdadREGULAR + arregloEdad[i];
+			contadorREGULAR++;
+		}
+		
+	}
+	if(contadorBUENO>0)promedioEdadBUENO = acumuladorEdadBUENO / contadorBUENO;
+	if(contadorMALO>0)promedioEdadMALO = acumuladorEdadMALO / contadorMALO;
+	if (contadorREGULAR > 0)promedioEdadREGULAR = acumuladorEdadREGULAR / contadorREGULAR;
+	
+
+	
+	cout << "Promedio de edad por nivel de satisfaccion bueno: " << promedioEdadBUENO << endl;
+	cout << "Promedio de edad por nivel de satisfaccion regular: " << promedioEdadREGULAR << endl;
+	cout << "Promedio de edad por nivel de satisfaccion malo: " << promedioEdadMALO << endl;
+	
+
+}
+
+
+
+
+int main()
+{
+	int n;
+	do {
+		cout << "ingrese la cantidad de pacientes" << endl;
+		cin >> n;
+	}while(n < 0 || n>50);
+
+
+	int* arregloEdad;
+	char* arregloSexo;
+	char* arregloTipoPrueba;
+	char* arregloNivelSatis;
+
+	arregloEdad = new int[n];
+	arregloSexo = new char[n];
+	arregloTipoPrueba = new char[n];
+	arregloNivelSatis = new char[n];
+
+	ingresadatos(&n, arregloEdad, arregloSexo, arregloTipoPrueba, arregloNivelSatis);
+	genera_y_muestra_arreglo(&n, arregloEdad,arregloSexo, arregloTipoPrueba, arregloNivelSatis);
+	hallay_mayor_y_cuantos(&n, arregloEdad);
+	porcentaje_pruebas(&n, arregloEdad, arregloTipoPrueba);
+	promedio_edad_por_nivel(&n, arregloEdad, arregloNivelSatis);
+
+	delete arregloEdad;
+	delete arregloSexo;
+	delete arregloTipoPrueba;
+	delete arregloNivelSatis;
+	_getch();
+
+}
